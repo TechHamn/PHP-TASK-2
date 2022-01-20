@@ -1,1 +1,1 @@
-# PHP-TASK-2
+# distributed-workers
