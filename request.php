@@ -1,6 +1,5 @@
-<?php
 
-$url = "https://www.google.com/";
+<?php
 
 function urlRequest($url){
 
@@ -18,7 +17,7 @@ function urlRequest($url){
         $result = curl_exec($resoure);
 
         $info = curl_getinfo($resoure,CURLINFO_HTTP_CODE);
-
+                
         if(curl_error($resoure)){
             echo 'Request Error:' . curl_error($resoure);
         }
