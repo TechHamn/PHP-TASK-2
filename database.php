@@ -1,12 +1,9 @@
 <?php
-
-
-
-    function readStatus($url){
-        //$statemaent = $pdo->prepare("SELECT * FROM products ORDER BY create_date DESC");
-        //$statemaent->execute();
-        //$products = $statemaent->fetchAll(PDO::FETCH_ASSOC);
-    }
+/* 
+* This class include databse class, database connection and other function related to database
+* Created By Zeinab Moghbel
+* On 2022-01-20
+*/
 
     class DataBase {
         private $hostname = 'localhost'; // MySQL Hostname
@@ -19,7 +16,7 @@
         private $connected = false;
 
 
-
+        # constructor
         public function __construct($hostname, $database, $username, $password)
 		{ 	
             $this->hostname = $hostname;
@@ -29,6 +26,7 @@
 			$this->Connect($hostname, $database, $username, $password);
 		}
 
+        # This function for connecting to database
 		private function Connect($hostname, $database, $username, $password)
 		{
 			$dsn = 'mysql:host='.$hostname.';port=3306;dbname='.$database;
@@ -47,6 +45,7 @@
 			}
 		}
 
+        # This function for getting URLs Info from workers table
         public function getUrls(){
             if(!$this->connected) { $this->Connect($this->hostname,$this->database,$this->username,$this->password); }
             $statemaent = $this->pdo->prepare("SELECT * FROM `workers` ");
@@ -55,6 +54,7 @@
             return $urlsInfo;
         }
 
+        # This function for getting status of url thtough url id
         public function getStatus($urlId){
             if(!$this->connected) { $this->Connect($this->hostname,$this->database,$this->username,$this->password); }
             
@@ -65,6 +65,7 @@
             return $status;
         }
 
+        # This function for changing status of url in workers table
         public function setStatus($urlId,$status){
             if(!$this->connected) { $this->Connect($this->hostname,$this->database,$this->username,$this->password); }
             $sql = "UPDATE workers SET status = '".$status."' WHERE id=".$urlId;
@@ -74,6 +75,7 @@
             return $urlsInfo;
         }
 
+        # This function for updaying status and http_code of url in workers table
         public function updateWorkesInfo($id,$status,$http_code){
             if(!$this->connected) { $this->Connect($this->hostname,$this->database,$this->username,$this->password); }
             $statemaent = $this->pdo->prepare("UPDATE workers SET status = '".$status."', http_code =". $http_code ." WHERE id=".$id);
